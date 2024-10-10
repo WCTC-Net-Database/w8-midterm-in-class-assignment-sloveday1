@@ -1,0 +1,51 @@
+﻿[
+  {
+    "$type": "Player",
+    "Name": "Brave Sir Robin",
+    "Type": "Fighter",
+    "Level": 1,
+    "HP": 10,
+    "Equipment": "sword|shield|potion",
+    "Gold": 50
+  },
+  {
+    "$type": "Goblin",
+    "Name": "Bob Goblin",
+    "Type": "Goblin",
+    "Level": 1,
+    "HP": 5,
+    "Treasure": "club"
+  },
+  {
+    "$type": "Goblin",
+    "Name": "Tom Goblin",
+    "Type": "Goblin",
+    "Level": 1,
+    "HP": 5,
+    "Treasure": null
+  },
+  {
+    "$type": "Goblin",
+    "Name": "Boss Goblin",
+    "Type": "Goblin",
+    "Level": 1,
+    "HP": 10,
+    "Treasure": "leather armor"
+  },
+  {
+    "$type": "Ghost",
+    "Name": "Silent Ghost",
+    "Type": "Ghost",
+    "Level": 2,
+    "HP": 8,
+    "Treasure": "cloak"
+  },
+  {
+    "$type": "Ghost",
+    "Name": "Scary Ghost",
+    "Type": "Ghost",
+    "Level": 2,
+    "HP": 8,
+    "Treasure": null
+  }
+]
