@@ -47,5 +47,21 @@
     "Level": 2,
     "HP": 8,
     "Treasure": null
+  },
+  {
+    "$type": "Giant",
+    "Name": "Greg the Giant",
+    "Type": "Giant",
+    "Level": 5,
+    "HP": 10,
+    "Treasure": "giant club"
+  },
+  {
+    "$type": "Gargoyle",
+    "Name": "Spooky Gargoyle",
+    "Type": "Gargoyle",
+    "Level": 3,
+    "HP": 8,
+    "Treasure": "diamond"
   }
 ]
