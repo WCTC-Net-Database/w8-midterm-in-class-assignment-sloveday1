@@ -15,6 +15,8 @@ public class GameEngine
     private readonly IRoomFactory _roomFactory;
     private ICharacter _player;
     private ICharacter _goblin;
+    private ICharacter _giant;
+    private ICharacter _gargoyle;
 
     private List<IRoom> _rooms;
 
@@ -41,10 +43,25 @@ public class GameEngine
         // TODO e.g. "Which monster would you like to attack?"
         // TODO Right now it just attacks the first monster in the room.
         // TODO It is ok to leave this functionality if there is only one monster in the room.
-        var target = _player.CurrentRoom.Characters.FirstOrDefault(c => c != _player);
-        if (target != null)
+        List<ICharacter> targets = new List<ICharacter>(_player.CurrentRoom.Characters);
+    
+        if (targets.Count >= 2)
         {
-            _player.Attack(target);
+            var count = 1;
+            foreach (var target in targets)
+            {
+                _outputManager.WriteLine(count + ". " + target.Name + ", " + target.Type);
+                count++;
+            }
+            _outputManager.WriteLine("Which monster would you like to attack?");
+            _outputManager.Display();
+            var input = int.Parse(Console.ReadLine());
+            
+            _player.Attack(targets[input - 1]);
+        }
+        else if (targets.Count == 1)
+        {
+            _player.Attack(targets[0]);
         }
         else
         {
@@ -124,12 +141,18 @@ public class GameEngine
     private void LoadMonsters()
     {
         _goblin = _context.Characters.OfType<Goblin>().FirstOrDefault();
+        _giant = _context.Characters.OfType<Giant>().FirstOrDefault();
+        _gargoyle = _context.Characters.OfType<Gargoyle>().FirstOrDefault();
 
         var random = new Random();
         var randomRoom = _rooms[random.Next(_rooms.Count)];
         randomRoom.AddCharacter(_goblin); // Use helper method
 
         // TODO Load your two new monsters here into the same room
+        var random2 = new Random();
+        var randomRoom2 = _rooms[random2.Next(_rooms.Count)];
+        randomRoom2.AddCharacter(_giant);
+        randomRoom2.AddCharacter(_gargoyle);
     }
 
     private void SetupGame()
@@ -159,6 +182,8 @@ public class GameEngine
         var library = _roomFactory.CreateRoom("library", _outputManager);
         var armory = _roomFactory.CreateRoom("armory", _outputManager);
         var garden = _roomFactory.CreateRoom("garden", _outputManager);
+        var tower = _roomFactory.CreateRoom("tower", _outputManager);
+        var cellar = _roomFactory.CreateRoom("cellar", _outputManager);
 
         entrance.North = treasureRoom;
         entrance.West = library;
@@ -173,11 +198,17 @@ public class GameEngine
         library.South = armory;
 
         armory.North = library;
+        armory.East = cellar;
 
         garden.West = entrance;
+        garden.North = tower;
+
+        tower.South = garden;
+
+        cellar.West = armory;
 
         // Store rooms in a list for later use
-        _rooms = new List<IRoom> { entrance, treasureRoom, dungeonRoom, library, armory, garden };
+        _rooms = new List<IRoom> { entrance, treasureRoom, dungeonRoom, library, armory, garden, tower, cellar };
 
         return entrance;
     }
