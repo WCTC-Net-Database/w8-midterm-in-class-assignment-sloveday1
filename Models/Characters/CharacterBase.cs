@@ -54,6 +54,8 @@ public abstract class CharacterBase : ICharacter
             playerWithGold.Gold += targetWithGold.Gold;
             targetWithGold.Gold = 0; // Gold is taken
         }
+
+        _currentRoom.RemoveCharacter(target);
     }
 
     public void Move(IRoom? nextRoom)
